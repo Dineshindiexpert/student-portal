@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}Chat Room - Student Portal{% endblock %}
+
+{% block content %}
+<div class="chat-container">
+    <h2>Welcome to the Chat Room, {{ current_user.username }}!</h2>
+
+    <div class="chat-box" id="chat-box">
+        <!-- Chat messages will appear here -->
+    </div>
+
+    <form id="chat-form" method="POST" action="#">
+        <input type="text" id="chat-input" placeholder="Type your message here..." autocomplete="off" required>
+        <button type="submit">Send</button>
+    </form>
+</div>
+
+<script>
+    const chatForm = document.getElementById("chat-form");
+    const chatBox = document.getElementById("chat-box");
+
+    chatForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const input = document.getElementById("chat-input");
+        const message = input.value.trim();
+
+        if (message) {
+            const msgElement = document.createElement("div");
+            msgElement.textContent = "{{ current_user.username }}: " + message;
+            msgElement.className = "chat-message";
+            chatBox.appendChild(msgElement);
+            input.value = "";
+        }
+    });
+</script>
+{% endblock %}

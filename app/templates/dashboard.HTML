@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - Student Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Welcome, {{ current_user.username }}!</h2>
+
+    <div class="profile-box">
+        <p><strong>Email:</strong> {{ current_user.email }}</p>
+        <p><strong>Verified:</strong> {{ 'Yes' if current_user.is_verified else 'No' }}</p>
+        <p><strong>Profile Photo:</strong></p>
+        {% if current_user.image_file %}
+            <img src="{{ url_for('static', filename='uploads/' ~ current_user.image_file) }}" width="120" alt="Profile Picture">
+        {% else %}
+            <p>No profile picture uploaded.</p>
+        {% endif %}
+    </div>
+
+    <div class="dashboard-actions">
+        <a href="{{ url_for('upload') }}" class="btn">Upload/Change Photo</a>
+        <a href="{{ url_for('chat') }}" class="btn">Chat Room</a>
+        <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+    </div>
+</div>
+{% endblock %}

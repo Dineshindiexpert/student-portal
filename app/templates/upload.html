@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Upload File - Student Portal{% endblock %}
+
+{% block content %}
+<div class="upload-container">
+    <h2>Upload Profile Photo or Document</h2>
+
+    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+        {{ form.hidden_tag() }}
+        
+        <div class="form-group">
+            {{ form.file.label(class="form-label") }}
+            {{ form.file(class="form-control") }}
+        </div>
+
+        <button type="submit" class="btn">Upload</button>
+    </form>
+
+    {% if filename %}
+        <p>Uploaded File: {{ filename }}</p>
+        <img src="{{ url_for('static', filename='uploads/' ~ filename) }}" alt="Uploaded Image" width="150">
+    {% endif %}
+</div>
+{% endblock %}

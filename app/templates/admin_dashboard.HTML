@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Student Portal{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <h2>Admin Dashboard</h2>
+
+    <div class="admin-controls">
+        <a href="{{ url_for('register') }}" class="btn">Add Student</a>
+        <a href="{{ url_for('delete_student') }}" class="btn">Delete Student</a>
+        <a href="{{ url_for('upload') }}" class="btn">Upload Student Photo</a>
+    </div>
+
+    <h3>Registered Students</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Photo</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.id }}</td>
+                <td>{{ student.username }}</td>
+                <td>{{ student.email }}</td>
+                <td>
+                    {% if student.image_file %}
+                        <img src="{{ url_for('static', filename='uploads/' ~ student.image_file) }}" width="50">
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <form method="POST" action="{{ url_for('delete_student', student_id=student.id) }}">
+                        <button type="submit" class="btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
